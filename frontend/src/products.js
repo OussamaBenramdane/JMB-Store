@@ -11,6 +11,18 @@ const products = [
     countInStock: 10,
     rating: 4.5,
     numReviews: 12,
+    ingredients: {
+      'Energy value (kJ)': '2324 kJ',
+      'Energy value (kcal)': '557 kcal',
+      Fat: '35 g',
+      'Saturated fatty acids': '19 g ',
+      Carbohydrates: '55 g ',
+      Sugars: '49 g',
+      'Dietary fiber': '1.3 g',
+      Protein: '5.3 g',
+      salt: '0.49 g',
+    },
+    nutriscore: 'E',
   },
   {
     _id: '2',
@@ -77,6 +89,6 @@ const products = [
     rating: 4,
     numReviews: 12,
   },
-]
+];
 
-export default products
+export default products;
