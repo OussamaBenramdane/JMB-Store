@@ -22,7 +22,7 @@ const products = [
       Protein: '5.3 g',
       salt: '0.49 g',
     },
-    nutriscore: 'E',
+    nutriscore: 'B',
     expDate: '2019/06/11',
     prodDate: new Date('2019-06-11'),
   },
@@ -93,4 +93,4 @@ const products = [
   },
 ];
 
-export default products;
+module.exports = products;
