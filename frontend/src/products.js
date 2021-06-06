@@ -23,6 +23,8 @@ const products = [
       salt: '0.49 g',
     },
     nutriscore: 'E',
+    expDate: '2019/06/11',
+    prodDate: new Date('2019-06-11'),
   },
   {
     _id: '2',

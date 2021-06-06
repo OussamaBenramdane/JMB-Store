@@ -13,11 +13,9 @@ const ProductScreen = ({ match }) => {
 
   for (const key in ingredients) {
     ingrTable.push(
-      <tr>
+      <tr key={key}>
         <td>{key}</td>{' '}
-        <td scope='row' class='text-muted ms-auto'>
-          {ingredients[key]} / 100 g
-        </td>
+        <td className='text-muted ms-auto'>{ingredients[key]} / 100 g</td>
       </tr>
     );
   }
@@ -42,7 +40,41 @@ const ProductScreen = ({ match }) => {
                 text={`${product.numReviews} reviews`}
               />
             </ListGroup.Item>
-            <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+            <ListGroup.Item>
+              Exp Date: {product.expDate.toDateString}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Card>
+                <ListGroup variant='flush'>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Price:</Col>
+                      <Col>
+                        <strong>${product.price}</strong>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Status:</Col>
+                      <Col>
+                        {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Button
+                      className='btn-block'
+                      type='button'
+                      disabled={product.countInStock === 0}
+                    >
+                      Add To Carte
+                    </Button>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
+            </ListGroup.Item>
           </ListGroup>
         </Col>
       </Row>
