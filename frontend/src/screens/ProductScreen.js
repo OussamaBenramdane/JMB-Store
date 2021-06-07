@@ -14,7 +14,7 @@ const ProductScreen = ({ match }) => {
       setProduct(data);
     };
     fetchProduct();
-  }, []);
+  }, [match]);
   const ingredients = product.ingredients;
   const ingrTable = [];
 
