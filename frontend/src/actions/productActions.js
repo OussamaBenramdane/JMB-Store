@@ -1,4 +1,4 @@
-import axios from 'acios';
+import axios from 'axios';
 
 import {
   PRODUCT_LIST_FAIL,
