@@ -135,7 +135,7 @@ const ProductScreen = ({ match }) => {
                 <div className='mt-auto'>
                   <img
                     alt=''
-                    src={`/nutriscore/${product.nutriscore}.png`}
+                    src={`/nutriscore/${product.nutriScore}.png`}
                     width='100'
                     height='40'
                     className='d-inline-block align-top offset-md-3'
