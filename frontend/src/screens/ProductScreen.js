@@ -15,7 +15,7 @@ const ProductScreen = ({ match }) => {
     };
     fetchProduct();
   }, [match]);
-  const ingredients = product.ingredients;
+  const ingredients = product.composition;
   const ingrTable = [];
 
   //Ingreedients Table
@@ -28,6 +28,8 @@ const ProductScreen = ({ match }) => {
       </tr>
     );
   }
+
+  //EXP Date Parsing method
 
   return (
     <>
