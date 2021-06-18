@@ -93,7 +93,7 @@ export const registerUser = (name, email, password) => async (dispatch) => {
 };
 
 export const registerProd =
-  (name, companyName, companyAddress = {}, numSiret, email, password) =>
+  (name, email, password, companyName, numSiret, companyAddress) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -107,14 +107,14 @@ export const registerProd =
       };
 
       const { data } = await axios.post(
-        '/api/users',
+        '/api/users/pro',
         {
           name,
-          companyName,
-          companyAddress,
-          numSiret,
           email,
           password,
+          companyName,
+          numSiret,
+          companyAddress,
         },
         config
       );

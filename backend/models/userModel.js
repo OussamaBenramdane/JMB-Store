@@ -4,14 +4,14 @@ import bcrypt from 'bcryptjs';
 const userSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
-    companyName: { type: String },
+    companyName: { type: String, unique: true },
     companyAddress: {
       address: { type: String },
       city: { type: String },
       postalCode: { type: String },
       country: { type: String },
     },
-    numSiret: { type: Number },
+    numSiret: { type: Number, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     isAdmin: { type: Boolean, required: true, default: false },
