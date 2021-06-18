@@ -127,6 +127,9 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      companyName: user.companyName,
+      numSiret: user.numSiret,
+      companyAddress: user.companyAddress,
       isAdmin: user.isAdmin,
       isProd: user.isProd,
     });
@@ -163,10 +166,45 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error('User not found');
   }
 });
+//@decs Update Producer profile
+//@route PUT /api/users/profile
+//@access Private
+
+const updateProdProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.companyName = req.body.companyName || user.companyName;
+    user.numSiret = req.body.numSiret || user.numSiret;
+    user.companyAddress = req.body.companyAddress || user.companyAddress;
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      companyName: updatedUser.companyName,
+      numSiret: updatedUser.numSiret,
+      companyAddress: updatedUser.companyAddress,
+      isAdmin: updatedUser.isAdmin,
+      isProd: updatedUser.isProd,
+      token: generateToken(updatedUser._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
 export {
   authUser,
   getUserProfile,
   registerUser,
   registerUserProd,
   updateUserProfile,
+  updateProdProfile,
 };
