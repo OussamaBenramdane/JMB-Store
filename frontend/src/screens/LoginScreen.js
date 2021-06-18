@@ -79,7 +79,7 @@ const LoginScreen = ({ location, history }) => {
         <Col>
           Are a professional ?{' '}
           <Link
-            to={redirect ? `/register?redirect=${redirect}` : '/registerpro'}
+            to={redirect ? `/registerpro?redirect=${redirect}` : '/registerpro'}
           >
             Register
           </Link>
