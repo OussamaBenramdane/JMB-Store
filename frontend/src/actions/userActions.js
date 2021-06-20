@@ -1,9 +1,15 @@
 import axios from 'axios';
 
 import {
+  PROD_DETAILS_FAIL,
+  PROD_DETAILS_REQUEST,
+  PROD_DETAILS_SUCCESS,
   PROD_REGISTER_FAIL,
   PROD_REGISTER_REQUEST,
   PROD_REGISTER_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -139,3 +145,74 @@ export const registerProd =
       });
     }
   };
+
+export const getUserDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_DETAILS_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/users/${id}`, config);
+
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const getProdDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PROD_DETAILS_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      Headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/users/${id}`, config);
+
+    dispatch({
+      type: PROD_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PROD_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
