@@ -86,7 +86,6 @@ const RegisterProdScreen = ({ location, history }) => {
         </Form.Group>
         <Row>
           <Col>
-            {' '}
             <Form.Group controlId='companyName'>
               <Form.Label>Company Name</Form.Label>
               <Form.Control

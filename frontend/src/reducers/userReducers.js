@@ -5,6 +5,9 @@ import {
   PROD_REGISTER_FAIL,
   PROD_REGISTER_REQUEST,
   PROD_REGISTER_SUCCESS,
+  PROD_UPDATE_PROFILE_FAIL,
+  PROD_UPDATE_PROFILE_REQUEST,
+  PROD_UPDATE_PROFILE_SUCCESS,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
@@ -15,6 +18,9 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL,
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
 } from '../constants/userConstants';
 
 export const userLoginReducer = (state = {}, action) => {
@@ -78,6 +84,32 @@ export const prodDetailsReducer = (state = { prod: {} }, action) => {
     case PROD_DETAILS_SUCCESS:
       return { loading: false, prod: action.payload };
     case PROD_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userUpdateProfileReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_UPDATE_PROFILE_REQUEST:
+      return { loading: true };
+    case USER_UPDATE_PROFILE_SUCCESS:
+      return { loading: false, success: true, userInfo: action.payload };
+    case USER_UPDATE_PROFILE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const prodUpdateProfileReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PROD_UPDATE_PROFILE_REQUEST:
+      return { loading: true };
+    case PROD_UPDATE_PROFILE_SUCCESS:
+      return { loading: false, successProd: true, userInfo: action.payload };
+    case PROD_UPDATE_PROFILE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

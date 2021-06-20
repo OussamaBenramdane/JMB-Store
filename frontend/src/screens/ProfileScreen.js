@@ -4,7 +4,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getUserDetails, getProdDetails } from '../actions/userActions';
+import {
+  getUserDetails,
+  getProdDetails,
+  updateUserProfile,
+  updateProdProfile,
+} from '../actions/userActions';
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('');
@@ -37,6 +42,11 @@ const ProfileScreen = ({ location, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userUpdateProfile = useSelector((state) => state.userUpdate);
+  const { success } = userUpdateProfile;
+  const prodUpdateProfile = useSelector((state) => state.prodUpdate);
+  const { successProd } = prodUpdateProfile;
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
@@ -61,7 +71,33 @@ const ProfileScreen = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
     } else {
-      //update profile
+      dispatch(
+        updateUserProfile({
+          id: user._id,
+          name,
+          email,
+          password,
+        })
+      );
+    }
+  };
+
+  const submitHandlerPro = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match');
+    } else {
+      dispatch(
+        updateProdProfile({
+          id: user._id,
+          name,
+          email,
+          password,
+          numSiret,
+          companyName,
+          companyAddress,
+        })
+      );
     }
   };
 
@@ -70,14 +106,17 @@ const ProfileScreen = ({ location, history }) => {
       <Col md={12}>
         <h2>User Profile</h2>
         {message && <Message variant='danger'>{message}</Message>}
-        {}
+        {error && <Message variant='danger'>{error}</Message>}
+        {success && <Message variant='success'>Profile Updated</Message>}
+        {successProd && <Message variant='success'>Profile Updated</Message>}
+        {loading && <Loader />}
 
         {loading ? (
           <Loader />
         ) : error ? (
           <Message variant='danger'>{error}</Message>
         ) : user.isProd ? (
-          <Form onSubmit={submitHandler}>
+          <Form onSubmit={submitHandlerPro}>
             <Form.Group controlId='name'>
               <Form.Label>Name</Form.Label>
               <Form.Control
