@@ -4,23 +4,24 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import {
-  getUserDetails,
+import { getUserDetails } from '../actions/userActions';
 
-} from '../actions/userActions';
-
-
-import {listMyOrders} from '../actions/orderActions';
+import { listMyOrders, listMyOrdersItems } from '../actions/orderActions';
 
 const FridgeScreen = ({ location, history }) => {
-
   const [message, setMessage] = useState(null);
-
 
   const dispatch = useDispatch();
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
+
+  const ordersItems = useSelector((state) => state.ordersItems);
+  const {
+    loading: loadingOrderItems,
+    error: errorOrderItems,
+    orderItems,
+  } = ordersItems;
 
   // const prodDetails = useSelector((state) => state.prodDetails);
   // const { loading, error, prod } = prodDetails;
@@ -29,7 +30,7 @@ const FridgeScreen = ({ location, history }) => {
   const { userInfo } = userLogin;
 
   const orderListMy = useSelector((state) => state.orderListMy);
-  const { loading: loadingOrders , error:errorOrders , orders } = orderListMy;
+  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
   useEffect(() => {
     if (!userInfo) {
@@ -37,71 +38,277 @@ const FridgeScreen = ({ location, history }) => {
     } else {
       if (!user || !user.name) {
         dispatch(getUserDetails('profile'));
-        dispatch(listMyOrders())
+        dispatch(listMyOrders());
+        dispatch(listMyOrdersItems());
       }
     }
   }, [dispatch, history, userInfo, user]);
 
-
   return (
-    <Row>
-      <Col md={12}>
-      <h2>My Fridge</h2>
-        {message && <Message variant='danger'>{message}</Message>}
-        {error && <Message variant='danger'>{error}</Message>}
-        {loading && <Loader />}
+    <div>
+      {message && <Message variant='danger'>{message}</Message>}
+      {error && <Message variant='danger'>{error}</Message>}
+      {loading && <Loader />}
+      <Row>
+        <Col md={12}>
+          <h2>My Orders</h2>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant='danger'>{error}</Message>
+          ) : (
+            <Row>
+              <Col md={12}>
+                {loadingOrders ? (
+                  <Loader />
+                ) : errorOrders ? (
+                  <Message variant='danger'>{errorOrders}</Message>
+                ) : (
+                  <Table striped bordered hover responsive calssName='table-sm'>
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>DATE</th>
+                        <th>TOTAL</th>
+                        <th>PAID</th>
+                        <th>DELIVERD</th>
+                        <th>DELIVERD</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders.map((order) => (
+                        <tr key={order._id}>
+                          <td>{order._id}</td>
+                          <td>{order.createdAt.substring(0, 10)}</td>
+                          <td>{order.totalPrice}</td>
+                          <td>
+                            {order.isPaid ? (
+                              order.paidAt.substring(0, 100)
+                            ) : (
+                              <i
+                                className='fas fa-times'
+                                style={{ color: 'red' }}
+                              ></i>
+                            )}
+                          </td>
+                          <td>
+                            {order.isDelivered ? (
+                              order.deliveredAtAt.substring(0, 100)
+                            ) : (
+                              <i
+                                className='fas fa-times'
+                                style={{ color: 'red' }}
+                              ></i>
+                            )}
+                          </td>
+                          <td>
+                            <LinkContainer to={`/order/${order._id}`}>
+                              <Button className='btn-sm' variant='light'>
+                                Details
+                              </Button>
+                            </LinkContainer>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                )}
+              </Col>
+            </Row>
+          )}
+        </Col>
+      </Row>
 
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant='danger'>{error}</Message>
-        ) : user.isProd ? (
-          <Row>
-            <Col md ={12}>
-            
-            {loadingOrders ? <Loader/> : errorOrders ? <Message variant='danger'>{errorOrders}</Message>:(
-              <Table striped bordered hover responsive calssName='table-sm'>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>DATE</th>
-                    <th>TOTAL</th>
-                    <th>PAID</th>
-                    <th>DELIVERD</th>
-                    <th>DELIVERD</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map(order=>(
-                    <tr key={order._id}>
-                      <td>{order._id}</td>
-                      <td>{order.createdAt.substring(0,10)}</td>
-                      <td>{order.totalPrice}</td>
-                      <td>{order.isPaid ? order.paidAt.substring(0,100):(
-                        <i className='fas fa-times' style={{color:'red'}}></i>
-                      )}</td>
-                      <td>{order.isDelivered ? order.deliveredAtAt.substring(0,100):(
-                        <i className='fas fa-times' style={{color:'red'}}></i>
-                      )}</td>
-                      <td>
-                        <LinkContainer to={`/order/${order._id}`}>
-                          <Button className='btn-sm' variant="light">Details</Button>
-                        </LinkContainer>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-
-              </Table>
-            )}
-            </Col>
-            <Col></Col>
-          </Row>
-        ) : (
-            <p></p>
-        )}
-      </Col>
-    </Row>
+      <Row>
+        <Col md={12}>
+          <h2>My Fridge</h2>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant='danger'>{error}</Message>
+          ) : (
+            <div>
+              <Row>
+                <Col md={6}>
+                  {loadingOrderItems ? (
+                    <Loader />
+                  ) : errorOrderItems ? (
+                    <Message variant='danger'>{errorOrderItems}</Message>
+                  ) : (
+                    <Table
+                      striped
+                      bordered
+                      hover
+                      responsive
+                      calssName='table-sm'
+                    >
+                      <thead>
+                        <tr>
+                          <th colspan='3' className='text-center'>
+                            Not expierd
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>PRODUCT</th>
+                          <th>EXPERATION DATE</th>
+                          <th>DETAILS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {orders.map((order) => (
+                          <tr key={order._id}>
+                            <td>{order._id}</td>
+                            <td>{order.createdAt.substring(0, 10)}</td>
+                            <td>
+                              <LinkContainer to={`/order/${order._id}`}>
+                                <Button className='btn-sm' variant='light'>
+                                  Details
+                                </Button>
+                              </LinkContainer>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  )}
+                </Col>
+                <Col md={6}>
+                  {loadingOrderItems ? (
+                    <Loader />
+                  ) : errorOrderItems ? (
+                    <Message variant='danger'>{errorOrderItems}</Message>
+                  ) : (
+                    <Table
+                      striped
+                      bordered
+                      hover
+                      responsive
+                      calssName='table-sm'
+                    >
+                      <thead>
+                        <tr>
+                          <th colspan='3' className='text-center'>
+                            Nearly Expierd
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>PRODUCT</th>
+                          <th>EXPERATION DATE</th>
+                          <th>DETAILS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {orders.map((order) => (
+                          <tr key={order._id}>
+                            <td>{order._id}</td>
+                            <td>{order.createdAt.substring(0, 10)}</td>
+                            <td>
+                              <LinkContainer to={`/order/${order._id}`}>
+                                <Button className='btn-sm' variant='light'>
+                                  Details
+                                </Button>
+                              </LinkContainer>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  )}
+                </Col>
+              </Row>
+              <Row>
+                <Col md={6}>
+                  {loadingOrderItems ? (
+                    <Loader />
+                  ) : errorOrderItems ? (
+                    <Message variant='danger'>{errorOrderItems}</Message>
+                  ) : (
+                    <Table
+                      striped
+                      bordered
+                      hover
+                      responsive
+                      calssName='table-sm'
+                    >
+                      <thead>
+                        <tr>
+                          <th colspan='3' className='text-center'>
+                            Expierd "(It can be consumed)"
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>PRODUCT</th>
+                          <th>EXPERATION DATE</th>
+                          <th>DETAILS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {orders.map((order) => (
+                          <tr key={order._id}>
+                            <td>{order._id}</td>
+                            <td>{order.createdAt.substring(0, 10)}</td>
+                            <td>
+                              <LinkContainer to={`/order/${order._id}`}>
+                                <Button className='btn-sm' variant='light'>
+                                  Details
+                                </Button>
+                              </LinkContainer>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  )}
+                </Col>
+                <Col md={6}>
+                  {loadingOrderItems ? (
+                    <Loader />
+                  ) : errorOrderItems ? (
+                    <Message variant='danger'>{errorOrderItems}</Message>
+                  ) : (
+                    <Table
+                      striped
+                      bordered
+                      hover
+                      responsive
+                      calssName='table-sm'
+                    >
+                      <thead>
+                        <tr>
+                          <th colspan='3' className='text-center'>
+                            Expierd "(Do not consume)"
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>PRODUCT</th>
+                          <th>EXPERATION DATE</th>
+                          <th>DETAILS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {orders.map((order) => (
+                          <tr key={order._id}>
+                            <td>{order._id}</td>
+                            <td>{order.createdAt.substring(0, 10)}</td>
+                            <td>
+                              <LinkContainer to={`/order/${order._id}`}>
+                                <Button className='btn-sm' variant='light'>
+                                  Details
+                                </Button>
+                              </LinkContainer>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  )}
+                </Col>
+              </Row>
+            </div>
+          )}
+        </Col>
+      </Row>
+    </div>
   );
 };
 

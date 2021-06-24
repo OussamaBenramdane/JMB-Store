@@ -1,12 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-
-
-
-
-
-
-
+import * as R from 'ramda';
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -48,48 +42,68 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id
 // @access  Private
 const getOrderById = asyncHandler(async (req, res) => {
-const order = await Order.findById(req.params.id).populate('user','name email')
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email'
+  );
 
-if (order) {
-  res.json(order)
-} else {
-  res.status(404)
-  throw new Error('Order not found')
-}
+  if (order) {
+    res.json(order);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
 });
 
 // @desc    Update order to paid
 // @route   GET /api/orders/:id/pay
 // @access  Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id)
+  const order = await Order.findById(req.params.id);
 
   if (order) {
-    order.isPaid = true
-    order.paidAt = Date.now()
+    order.isPaid = true;
+    order.paidAt = Date.now();
     order.paymentResult = {
       id: req.body.id,
       status: req.body.status,
       update_time: req.body.update_time,
       email_address: req.body.payer.email_address,
-    }
+    };
 
-    const updatedOrder = await order.save()
+    const updatedOrder = await order.save();
 
-    res.json(updatedOrder)
+    res.json(updatedOrder);
   } else {
-    res.status(404)
-    throw new Error('Order not found')
+    res.status(404);
+    throw new Error('Order not found');
   }
-})
+});
 
 // @desc    Get logged in user orders
 // @route   GET /api/orders/myorders
 // @access  Private
 const getMyOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ user: req.user._id })
-  res.json(orders)
-})
+  const orders = await Order.find({ user: req.user._id });
+  res.json(orders);
+});
 
+// @desc    Get logged in user items in orders
+// @route   GET /api/orders/myorders/items
+// @access  Private
+const getMyOrdersItems = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id });
+  let orderItemsAr = [];
+  R.map((order) => {
+    orderItemsAr = R.concat(orderItemsAr, order.orderItems);
+  }, orders);
+  res.json(orderItemsAr);
+});
 
-export { addOrderItems, getOrderById , updateOrderToPaid , getMyOrders};
+export {
+  addOrderItems,
+  getOrderById,
+  updateOrderToPaid,
+  getMyOrders,
+  getMyOrdersItems,
+};
