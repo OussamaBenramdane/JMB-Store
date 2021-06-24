@@ -6,9 +6,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import {
   getUserDetails,
-  getProdDetails,
-  updateUserProfile,
-  updateProdProfile,
+
 } from '../actions/userActions';
 
 
@@ -48,7 +46,7 @@ const FridgeScreen = ({ location, history }) => {
   return (
     <Row>
       <Col md={12}>
-      <h2>My Orders</h2>
+      <h2>My Fridge</h2>
         {message && <Message variant='danger'>{message}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
         {loading && <Loader />}

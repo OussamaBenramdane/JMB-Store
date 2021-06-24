@@ -45,6 +45,7 @@ const PlaceOrderScreen = ({ history }) => {
     }
     // eslint-disable-next-line
   }, [history, success]);
+  console.log(cart.cartItems)
 
   const placeOrderHandler = () => {
     dispatch(
