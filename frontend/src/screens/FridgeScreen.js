@@ -24,13 +24,7 @@ const FridgeScreen = ({ location, history }) => {
     ordersItems,
   } = orderItems;
 
-  const date = '2021-06-19';
-
   const dateNow = new Date();
-
-  const diff = Moment(date).diff(dateNow, 'days');
-
-  console.log(diff);
 
   // const prodDetails = useSelector((state) => state.prodDetails);
   // const { loading, error, prod } = prodDetails;
@@ -73,7 +67,14 @@ const FridgeScreen = ({ location, history }) => {
                 ) : errorOrders ? (
                   <Message variant='danger'>{errorOrders}</Message>
                 ) : (
-                  <Table striped bordered hover responsive calssName='table-sm'>
+                  <Table
+                    striped
+                    bordered
+                    hover
+                    responsive
+                    calssName='table-sm'
+                    variant='dark'
+                  >
                     <thead>
                       <tr>
                         <th>ID</th>
@@ -81,7 +82,7 @@ const FridgeScreen = ({ location, history }) => {
                         <th>TOTAL</th>
                         <th>PAID</th>
                         <th>DELIVERD</th>
-                        <th>DELIVERD</th>
+                        <th>INFO</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -152,12 +153,12 @@ const FridgeScreen = ({ location, history }) => {
                       calssName='table-sm'
                     >
                       <thead>
-                        <tr>
+                        <tr className='table-success'>
                           <th colspan='3' className='text-center'>
                             Not expierd
                           </th>
                         </tr>
-                        <tr>
+                        <tr className='table-success'>
                           <th>PRODUCT</th>
                           <th>EXPERATION DATE</th>
                           <th>DETAILS</th>
@@ -168,7 +169,7 @@ const FridgeScreen = ({ location, history }) => {
                           orderItem.isPromp &&
                           Moment(orderItem.expDate).diff(dateNow, 'days') >
                             30 ? (
-                            <tr key={orderItem._id}>
+                            <tr key={orderItem._id} className='table-success'>
                               <td>
                                 <Image
                                   style={{ height: '30px' }}
@@ -210,14 +211,15 @@ const FridgeScreen = ({ location, history }) => {
                       hover
                       responsive
                       calssName='table-sm'
+                      style={{ backgroundColor: 'red' }}
                     >
                       <thead>
-                        <tr>
+                        <tr className='table-warning'>
                           <th colspan='3' className='text-center'>
                             Nearly Expierd
                           </th>
                         </tr>
-                        <tr>
+                        <tr className='table-warning'>
                           <th>PRODUCT</th>
                           <th>EXPERATION DATE</th>
                           <th>DETAILS</th>
@@ -229,7 +231,7 @@ const FridgeScreen = ({ location, history }) => {
                           Moment(orderItem.expDate).diff(dateNow, 'days') > 1 &&
                           Moment(orderItem.expDate).diff(dateNow, 'days') <
                             7 ? (
-                            <tr key={orderItem._id}>
+                            <tr key={orderItem._id} className='table-warning'>
                               <td>
                                 <Image
                                   style={{ height: '30px' }}
@@ -275,12 +277,12 @@ const FridgeScreen = ({ location, history }) => {
                       calssName='table-sm'
                     >
                       <thead>
-                        <tr>
+                        <tr className='table-danger'>
                           <th colspan='3' className='text-center'>
                             Expierd "(It can be consumed)"
                           </th>
                         </tr>
-                        <tr>
+                        <tr className='table-danger'>
                           <th>PRODUCT</th>
                           <th>EXPERATION DATE</th>
                           <th>DETAILS</th>
@@ -293,7 +295,7 @@ const FridgeScreen = ({ location, history }) => {
                             -7 &&
                           Moment(orderItem.expDate).diff(dateNow, 'days') <=
                             0 ? (
-                            <tr key={orderItem._id}>
+                            <tr key={orderItem._id} className='table-danger'>
                               <td>
                                 <Image
                                   style={{ height: '30px' }}
@@ -337,12 +339,12 @@ const FridgeScreen = ({ location, history }) => {
                       calssName='table-sm'
                     >
                       <thead>
-                        <tr>
+                        <tr className='table-primary'>
                           <th colspan='3' className='text-center'>
                             Expierd "(Do not consume)"
                           </th>
                         </tr>
-                        <tr>
+                        <tr className='table-primary'>
                           <th>PRODUCT</th>
                           <th>EXPERATION DATE</th>
                           <th>DETAILS</th>
@@ -353,7 +355,7 @@ const FridgeScreen = ({ location, history }) => {
                           orderItem.isPromp &&
                           Moment(orderItem.expDate).diff(dateNow, 'days') <=
                             -7 ? (
-                            <tr key={orderItem._id}>
+                            <tr key={orderItem._id} className='table-primary'>
                               <td>
                                 <Image
                                   style={{ height: '30px' }}
