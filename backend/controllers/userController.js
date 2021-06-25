@@ -263,6 +263,38 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
+//@decs Update Producer
+//@route PUT /api/users/:id
+//@access Private
+
+const updateProd = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.companyName = req.body.companyName || user.companyName;
+    user.numSiret = req.body.numSiret || user.numSiret;
+    user.companyAddress = req.body.companyAddress || user.companyAddress;
+    user.isProd = req.body.isProd;
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      companyName: updatedUser.companyName,
+      numSiret: updatedUser.numSiret,
+      companyAddress: updatedUser.companyAddress,
+      isProd: updatedUser.isProd,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 export {
   authUser,
   getUserProfile,
@@ -274,4 +306,5 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  updateProd,
 };
