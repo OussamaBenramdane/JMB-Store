@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Form, Button, Row, Col } from 'react-bootstrap';
+import { Table, Form, Image, Button, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails } from '../actions/userActions';
+import Moment from 'moment';
 
 import { listMyOrders, listMyOrdersItems } from '../actions/orderActions';
 
@@ -16,12 +17,20 @@ const FridgeScreen = ({ location, history }) => {
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
-  const ordersItems = useSelector((state) => state.ordersItems);
+  const orderItems = useSelector((state) => state.orderItems);
   const {
     loading: loadingOrderItems,
     error: errorOrderItems,
-    orderItems,
-  } = ordersItems;
+    ordersItems,
+  } = orderItems;
+
+  const date = '2021-06-19';
+
+  const dateNow = new Date();
+
+  const diff = Moment(date).diff(dateNow, 'days');
+
+  console.log(diff);
 
   // const prodDetails = useSelector((state) => state.prodDetails);
   // const { loading, error, prod } = prodDetails;
@@ -155,19 +164,36 @@ const FridgeScreen = ({ location, history }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {orders.map((order) => (
-                          <tr key={order._id}>
-                            <td>{order._id}</td>
-                            <td>{order.createdAt.substring(0, 10)}</td>
-                            <td>
-                              <LinkContainer to={`/order/${order._id}`}>
-                                <Button className='btn-sm' variant='light'>
-                                  Details
-                                </Button>
-                              </LinkContainer>
-                            </td>
-                          </tr>
-                        ))}
+                        {ordersItems.map((orderItem) =>
+                          orderItem.isPromp &&
+                          Moment(orderItem.expDate).diff(dateNow, 'days') >
+                            30 ? (
+                            <tr key={orderItem._id}>
+                              <td>
+                                <Image
+                                  style={{ height: '30px' }}
+                                  src={orderItem.image}
+                                  alt={orderItem.name}
+                                  fluid
+                                  rounded
+                                />{' '}
+                                {orderItem.name}
+                              </td>
+                              <td>{orderItem.expDate.substring(0, 10)}</td>
+                              <td>
+                                <LinkContainer
+                                  to={`/product/${orderItem.product}`}
+                                >
+                                  <Button className='btn-sm' variant='light'>
+                                    Details
+                                  </Button>
+                                </LinkContainer>
+                              </td>
+                            </tr>
+                          ) : (
+                            <></>
+                          )
+                        )}
                       </tbody>
                     </Table>
                   )}
@@ -198,19 +224,37 @@ const FridgeScreen = ({ location, history }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {orders.map((order) => (
-                          <tr key={order._id}>
-                            <td>{order._id}</td>
-                            <td>{order.createdAt.substring(0, 10)}</td>
-                            <td>
-                              <LinkContainer to={`/order/${order._id}`}>
-                                <Button className='btn-sm' variant='light'>
-                                  Details
-                                </Button>
-                              </LinkContainer>
-                            </td>
-                          </tr>
-                        ))}
+                        {ordersItems.map((orderItem) =>
+                          orderItem.isPromp &&
+                          Moment(orderItem.expDate).diff(dateNow, 'days') > 1 &&
+                          Moment(orderItem.expDate).diff(dateNow, 'days') <
+                            7 ? (
+                            <tr key={orderItem._id}>
+                              <td>
+                                <Image
+                                  style={{ height: '30px' }}
+                                  src={orderItem.image}
+                                  alt={orderItem.name}
+                                  fluid
+                                  rounded
+                                />{' '}
+                                {orderItem.name}
+                              </td>
+                              <td>{orderItem.expDate.substring(0, 10)}</td>
+                              <td>
+                                <LinkContainer
+                                  to={`/product/${orderItem.product}`}
+                                >
+                                  <Button className='btn-sm' variant='light'>
+                                    Details
+                                  </Button>
+                                </LinkContainer>
+                              </td>
+                            </tr>
+                          ) : (
+                            <></>
+                          )
+                        )}
                       </tbody>
                     </Table>
                   )}
@@ -243,19 +287,38 @@ const FridgeScreen = ({ location, history }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {orders.map((order) => (
-                          <tr key={order._id}>
-                            <td>{order._id}</td>
-                            <td>{order.createdAt.substring(0, 10)}</td>
-                            <td>
-                              <LinkContainer to={`/order/${order._id}`}>
-                                <Button className='btn-sm' variant='light'>
-                                  Details
-                                </Button>
-                              </LinkContainer>
-                            </td>
-                          </tr>
-                        ))}
+                        {ordersItems.map((orderItem) =>
+                          orderItem.isPromp &&
+                          Moment(orderItem.expDate).diff(dateNow, 'days') >=
+                            -7 &&
+                          Moment(orderItem.expDate).diff(dateNow, 'days') <=
+                            0 ? (
+                            <tr key={orderItem._id}>
+                              <td>
+                                <Image
+                                  style={{ height: '30px' }}
+                                  src={orderItem.image}
+                                  alt={orderItem.name}
+                                  fluid
+                                  rounded
+                                />{' '}
+                                {orderItem.name}
+                              </td>
+                              <td>{orderItem.expDate.substring(0, 10)}</td>
+                              <td>
+                                <LinkContainer
+                                  to={`/product/${orderItem.product}`}
+                                >
+                                  <Button className='btn-sm' variant='light'>
+                                    Details
+                                  </Button>
+                                </LinkContainer>
+                              </td>
+                            </tr>
+                          ) : (
+                            <></>
+                          )
+                        )}
                       </tbody>
                     </Table>
                   )}
@@ -286,19 +349,36 @@ const FridgeScreen = ({ location, history }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {orders.map((order) => (
-                          <tr key={order._id}>
-                            <td>{order._id}</td>
-                            <td>{order.createdAt.substring(0, 10)}</td>
-                            <td>
-                              <LinkContainer to={`/order/${order._id}`}>
-                                <Button className='btn-sm' variant='light'>
-                                  Details
-                                </Button>
-                              </LinkContainer>
-                            </td>
-                          </tr>
-                        ))}
+                        {ordersItems.map((orderItem) =>
+                          orderItem.isPromp &&
+                          Moment(orderItem.expDate).diff(dateNow, 'days') <=
+                            -7 ? (
+                            <tr key={orderItem._id}>
+                              <td>
+                                <Image
+                                  style={{ height: '30px' }}
+                                  src={orderItem.image}
+                                  alt={orderItem.name}
+                                  fluid
+                                  rounded
+                                />
+                                {orderItem.name}
+                              </td>
+                              <td>{orderItem.expDate.substring(0, 10)}</td>
+                              <td>
+                                <LinkContainer
+                                  to={`/product/${orderItem.product}`}
+                                >
+                                  <Button className='btn-sm' variant='light'>
+                                    Details
+                                  </Button>
+                                </LinkContainer>
+                              </td>
+                            </tr>
+                          ) : (
+                            <></>
+                          )
+                        )}
                       </tbody>
                     </Table>
                   )}
