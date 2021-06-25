@@ -97,13 +97,20 @@ const UserListScreen = ({ history }) => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className='table-sm'>
+        <Table
+          striped
+          bordered
+          hover
+          responsive
+          calssName='table-sm'
+          variant='dark'
+        >
           <thead>
             <tr>
               <th>COMPANY NAME</th>
               <th>NAME</th>
               <th>EMAIL</th>
-              <th>ADMIN</th>
+              <th>CITY</th>
               <th></th>
             </tr>
           </thead>
@@ -116,16 +123,7 @@ const UserListScreen = ({ history }) => {
                   <td>
                     <a href={`mailto:${user.email}`}>{user.email}</a>
                   </td>
-                  <td>
-                    {user.isAdmin ? (
-                      <i
-                        className='fas fa-check'
-                        style={{ color: 'green' }}
-                      ></i>
-                    ) : (
-                      <i className='fas fa-times' style={{ color: 'red' }}></i>
-                    )}
-                  </td>
+                  <td>{user.companyAddress.city}</td>
                   <td>
                     <LinkContainer to={`/admin/user/${user._id}/edit`}>
                       <Button variant='light' className='btn-sm'>
