@@ -54,6 +54,7 @@ const UserEditScreen = ({ match, history }) => {
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
+        {successUpdate && <Message variant='success'>Profile Updated</Message>}
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
@@ -72,13 +73,7 @@ const UserEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group
-              controlId='email'
-              style={{
-                marginTop: '20px',
-                display: 'block',
-              }}
-            >
+            <Form.Group controlId='email'>
               <Form.Label>Email Address</Form.Label>
               <Form.Control
                 type='email'
@@ -94,21 +89,10 @@ const UserEditScreen = ({ match, history }) => {
                 label='Is Admin'
                 checked={isAdmin}
                 onChange={(e) => setIsAdmin(e.target.checked)}
-                style={{
-                  marginTop: '20px',
-                  display: 'block',
-                }}
               ></Form.Check>
             </Form.Group>
 
-            <Button
-              type='submit'
-              variant='primary'
-              style={{
-                marginTop: '20px',
-                display: 'block',
-              }}
-            >
+            <Button type='submit' variant='primary'>
               Update
             </Button>
           </Form>

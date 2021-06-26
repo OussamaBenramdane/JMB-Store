@@ -42,7 +42,7 @@ const ProfileScreen = ({ location, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const userUpdateProfile = useSelector((state) => state.userUpdate);
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
   const prodUpdateProfile = useSelector((state) => state.prodUpdate);
   const { successProd } = prodUpdateProfile;
