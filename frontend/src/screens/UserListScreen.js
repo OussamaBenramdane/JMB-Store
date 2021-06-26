@@ -47,7 +47,8 @@ const UserListScreen = ({ history }) => {
               <th>NAME</th>
               <th>EMAIL</th>
               <th>ADMIN</th>
-              <th></th>
+              <th>DELETE</th>
+              <th>UPDATE</th>
             </tr>
           </thead>
           <tbody>
@@ -69,12 +70,7 @@ const UserListScreen = ({ history }) => {
                       <i className='fas fa-times' style={{ color: 'red' }}></i>
                     )}
                   </td>
-                  <td>
-                    <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                      <Button variant='light' className='btn-sm'>
-                        <i className='fas fa-edit'></i>
-                      </Button>
-                    </LinkContainer>
+                  <td className='text-center'>
                     <Button
                       variant='danger'
                       className='btn-sm'
@@ -82,6 +78,13 @@ const UserListScreen = ({ history }) => {
                     >
                       <i className='fas fa-trash'></i>
                     </Button>
+                  </td>
+                  <td className='text-center'>
+                    <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                      <Button variant='light' className='btn-sm'>
+                        <i className='fas fa-edit'></i>
+                      </Button>
+                    </LinkContainer>
                   </td>
                 </tr>
               ) : (
@@ -111,7 +114,8 @@ const UserListScreen = ({ history }) => {
               <th>NAME</th>
               <th>EMAIL</th>
               <th>CITY</th>
-              <th></th>
+              <th>DELETE</th>
+              <th>UPDATE</th>
             </tr>
           </thead>
           <tbody>
@@ -124,12 +128,7 @@ const UserListScreen = ({ history }) => {
                     <a href={`mailto:${user.email}`}>{user.email}</a>
                   </td>
                   <td>{user.companyAddress.city}</td>
-                  <td>
-                    <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                      <Button variant='light' className='btn-sm'>
-                        <i className='fas fa-edit'></i>
-                      </Button>
-                    </LinkContainer>
+                  <td className='text-center'>
                     <Button
                       variant='danger'
                       className='btn-sm'
@@ -137,6 +136,13 @@ const UserListScreen = ({ history }) => {
                     >
                       <i className='fas fa-trash'></i>
                     </Button>
+                  </td>
+                  <td className='text-center'>
+                    <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                      <Button variant='light' className='btn-sm'>
+                        <i className='fas fa-edit'></i>
+                      </Button>
+                    </LinkContainer>
                   </td>
                 </tr>
               ) : (
