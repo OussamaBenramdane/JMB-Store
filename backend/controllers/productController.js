@@ -46,14 +46,34 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
     name: 'Sample name',
-    price: 0,
-    user: req.user._id,
-    image: '/images/sample.jpg',
-    brand: 'Sample brand',
-    category: 'Sample category',
-    countInStock: 0,
-    numReviews: 0,
+    image: '/images/sampke.jpg',
+    brand: 'Sample breand',
+    category: 'Sample Category',
     description: 'Sample description',
+    numReviews: 0,
+    price: 0,
+    countInStock: 0,
+    composition: {
+      EnergyKJ: 0,
+      EnergyKcal: 0,
+      Fat: 0,
+      Acids: 0,
+      Carbohydrates: 0,
+      Sugars: 0,
+      Fiber: 0,
+      Protein: 0,
+      salt: 0,
+    },
+    nutriScore: 'A',
+    expDate: new Date('2222/2/22'),
+    prodDate: new Date('1111/1/11'),
+    isPromp: true,
+    barreCode: {
+      origCode: 0,
+      fabCode: 0,
+      prodCode: 0,
+      contrCode: 0,
+    },
   });
 
   const createdProduct = await product.save();
@@ -64,19 +84,38 @@ const createProduct = asyncHandler(async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
-    req.body;
+  const {
+    name,
+    price,
+    description,
+    image,
+    brand,
+    category,
+    countInStock,
+    composition,
+    nutriScore,
+    expDate,
+    prodDate,
+    isPromp,
+    barreCode,
+  } = req.body;
 
   const product = await Product.findById(req.params.id);
 
   if (product) {
-    product.name = name;
-    product.price = price;
-    product.description = description;
-    product.image = image;
-    product.brand = brand;
-    product.category = category;
-    product.countInStock = countInStock;
+    (product.name = name),
+      (product.image = image),
+      (product.brand = brand),
+      (product.category = category),
+      (product.description = description),
+      (product.price = price),
+      (product.countInStock = countInStock),
+      (product.composition = composition),
+      (product.nutriScore = nutriScore),
+      (product.expDate = expDate),
+      (product.prodDate = prodDate),
+      (product.isPromp = isPromp),
+      (product.barreCode = barreCode);
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);
