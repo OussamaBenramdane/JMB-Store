@@ -1,10 +1,8 @@
-# MERN-BUS-APP
+# JMB Store
 
-## MFRP (My First Real Project) assigned by Cognizant during Internship
+## End of the year project for a smart store
 
-A Bus ticket booking application made using MERN Stack (MongoDB, Express js, React js, Node js)
-
-The Bus ticket application is composed of the following Features:
+A smart store application made using MERN Stack (MongoDB, Express js, React js, Node js)
 
 ### Front-End
 
@@ -16,15 +14,7 @@ The Bus ticket application is composed of the following Features:
 
 - Has a profile page, which will display all information about the signed in user.
 
-- List of cities for users to choose from (starting city & destination city).
-
-- Getting list of bus's of different companies with various details.
-
-- Seat selection page has a very user friendly environment, which also generates dynamic forms for storing data's of passengers.
-
-- Has a Confirmation page, which gets a debit card data using react-credit-cards. This version of the application does not include handling the payment process.
-
-- Final page has a ticket displaying component, it displays all passenger data and also generates a random number as a transaction ID.
+- Products CRUD system.
 
 ### Back-End
 
@@ -102,22 +92,22 @@ npm -v
 
 Follow the following steps to get development environment running.
 
-- Clone _'MERN-BUS-APP.git'_ repository from GitHub
+- Clone _'JMB-Store.git'_ repository from GitHub
 
   ```bash
-  git clone https://github.com/AdityaKumawat97/MERN-BUS-APP.git
+  git clone https://github.com/OussamaBenramdane/JMB-Store.git
   ```
 
   _OR USING SSH_
 
   ```bash
-  git clone git@github.com:AdityaKumawat97/MERN-BUS-APP.git
+  git clone git@github.com:OussamaBenramdane/JMB-Store.git
   ```
 
 - Install node modules
 
   ```bash
-  cd MERN-BUS-APP
+  cd JMB Store
   cd frontend
   npm install
   cd..
@@ -136,6 +126,16 @@ Follow the following steps to get development environment running.
   npm start
   cd..
   cd backend
+  npm run devStart
+  ```
+
+  Or Just
+
+  ```bash
+  cd JMB Store
+
+  npm run dev
+
   npm run devStart
   ```
 
