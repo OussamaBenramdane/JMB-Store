@@ -33,7 +33,8 @@ This project also demonstrates:
 - a typcial React project layout structure
 
 **Screenshots:**
-Landing Page:
+
+<!-- Landing Page:
 
 ![](documentationResources/bus.gif)
 
@@ -52,7 +53,7 @@ Seat Selection Page:
 Payment & Confirmation Page:
 ![](documentationResources/payment.gif)
 
----
+--- -->
 
 ## Developed With
 
