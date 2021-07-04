@@ -6,6 +6,9 @@ import {
   STOCK_LIST_FAIL,
   STOCK_LIST_REQUEST,
   STOCK_LIST_SUCCESS,
+  STOCK_DELETE_REQUEST,
+  STOCK_DELETE_SUCCESS,
+  STOCK_DELETE_FAIL
 } from '../constants/stockConstants';
 import { logout } from './userActions';
 
@@ -71,3 +74,39 @@ export const createStock =
       });
     }
   };
+
+export const deleteStock = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: STOCK_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/stock/${id}`, config);
+
+    dispatch({
+      type: STOCK_DELETE_SUCCESS,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
+    dispatch({
+      type: STOCK_DELETE_FAIL,
+      payload: message,
+    });
+  }
+};

@@ -8,7 +8,7 @@ import {
   productCreateReducer,
   productUpdateReducer,
 } from './reducers/productReducers';
-import { stockListReducer, stockCreateReducer } from './reducers/stockReducer';
+import { stockListReducer, stockCreateReducer , stocktDeleteReducer } from './reducers/stockReducer';
 
 import { cartReducer } from './reducers/cartReducers';
 import {
@@ -58,6 +58,7 @@ const reducer = combineReducers({
 
   stockItems: stockListReducer,
   stockCreate: stockCreateReducer,
+  stockDelete : stocktDeleteReducer ,
 });
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

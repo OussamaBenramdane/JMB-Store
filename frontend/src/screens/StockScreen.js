@@ -4,7 +4,7 @@ import { Form, Table, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listStocks, createStock } from '../actions/stockAction';
+import { listStocks, createStock , deleteStock } from '../actions/stockAction';
 import FormContainer from '../components/FormContainer';
 
 const StockScreen = ({ history }) => {
@@ -69,6 +69,14 @@ const StockScreen = ({ history }) => {
 
   const submitHandler = (e) => {
     dispatch(createStock(name, qty, price, lequdationDate, receptionDate));
+  };
+
+    const deleteHandler = (id) => {
+    if (window.confirm('Are you sure')) {
+      dispatch(deleteStock(id));
+      
+    }
+    window.location.reload();
   };
 
   return (
@@ -177,6 +185,7 @@ const StockScreen = ({ history }) => {
               <th>UNIT PRICE</th>
               <th>ENTRY</th>
               <th>OUT</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -188,6 +197,15 @@ const StockScreen = ({ history }) => {
                 <td>{item.price}</td>
                 <td>{item.lequdationDate.substring(0, 10)}</td>
                 <td>{item.receptionDate.substring(0, 10)}</td>
+                <td>
+                                    <Button
+                      variant='danger'
+                      className='btn-sm text-center'
+                      onClick={() => deleteHandler(item._id)}
+                    >
+                      <i className='fas fa-trash'></i>
+                    </Button>
+                </td>
               </tr>
             ))}
           </tbody>
