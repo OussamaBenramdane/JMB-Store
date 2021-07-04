@@ -27,13 +27,34 @@ const StockScreen = ({ history }) => {
   } = stockCreate;
 
   const totalPrice = (stocks) => {
-    let total = 0;
+     let total = 0;
 
     for (const item in stocks) {
-      total += item.price * item.qty;
+     total += stocks[item].price
     }
     return total;
   };
+
+  const totalStock = (stocks) => {
+     let total = 0;
+
+    for (const item in stocks) {
+     total += stocks[item].qty
+    }
+    return total;
+  };
+
+  
+  const totalItems = (stocks) => {
+     let total = 0;
+
+    for (const item in stocks) {
+     total ++;
+    }
+    return total;
+  };
+
+  console.log(totalPrice(stocks));
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -47,7 +68,6 @@ const StockScreen = ({ history }) => {
   }, [dispatch, history, userInfo]);
 
   const submitHandler = (e) => {
-    e.preventDefault();
     dispatch(createStock(name, qty, price, lequdationDate, receptionDate));
   };
 
@@ -186,8 +206,7 @@ const StockScreen = ({ history }) => {
               <div class='card-body'>
                 <h5 class='card-title'>Stock Items Count</h5>
                 <p class='card-text'>
-                  There is a total of 25 item in our store for the time beeing
-                  that need to be solde
+                  There is a total of <h1 class="text-success">{totalItems(stocks) } Products </h1>  / items in our store 
                 </p>
               </div>
             </div>
@@ -198,7 +217,7 @@ const StockScreen = ({ history }) => {
               <div class='card-body'>
                 <h5 class='card-title'>Totale Cost</h5>
                 <p class='card-text'>
-                  There in a total of 1250.25 Euros of marchendise stocked in
+                  There in a total of  <h1 class="text-success">{totalPrice(stocks)} €</h1> Euros of marchendise stocked in
                   our wehrehouses
                 </p>
               </div>
@@ -210,7 +229,8 @@ const StockScreen = ({ history }) => {
               <div class='card-body'>
                 <h5 class='card-title'>Total Stock</h5>
                 <p class='card-text'>
-                  There is 5052 in total quantity stored and a mass of 2563 Kg
+                  There is <h1 class="text-success">{totalStock(stocks) } Pcs/Kg</h1> 
+                   in total quantity stored in mass of
                   of goods
                 </p>
               </div>
