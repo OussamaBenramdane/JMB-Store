@@ -182,36 +182,36 @@ const StockScreen = ({ history }) => {
         <Row>
           <Col className='md-4'>
             <div class='card text-white bg-dark mb-3'>
-              <div class='card-header'>Header</div>
+              <div class='card-header'>Section 1</div>
               <div class='card-body'>
-                <h5 class='card-title'>Dark card title</h5>
+                <h5 class='card-title'>Stock Items Count</h5>
                 <p class='card-text'>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  There is a total of 25 item in our store for the time beeing
+                  that need to be solde
                 </p>
               </div>
             </div>
           </Col>
           <Col>
             <div class='card text-white bg-dark mb-3'>
-              <div class='card-header'>Header</div>
+              <div class='card-header'>Section 2</div>
               <div class='card-body'>
-                <h5 class='card-title'>Dark card title</h5>
+                <h5 class='card-title'>Totale Cost</h5>
                 <p class='card-text'>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  There in a total of 1250.25 Euros of marchendise stocked in
+                  our wehrehouses
                 </p>
               </div>
             </div>
           </Col>
           <Col>
             <div class='card text-white bg-dark mb-3'>
-              <div class='card-header'>Header</div>
+              <div class='card-header'>Section 3</div>
               <div class='card-body'>
-                <h5 class='card-title'>Dark card title</h5>
+                <h5 class='card-title'>Total Stock</h5>
                 <p class='card-text'>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  There is 5052 in total quantity stored and a mass of 2563 Kg
+                  of goods
                 </p>
               </div>
             </div>
