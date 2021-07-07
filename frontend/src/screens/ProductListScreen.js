@@ -4,6 +4,7 @@ import { Table, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import BareCode from 'react-barcode';
 // import Paginate from '../components/Paginate';
 import {
   listProducts,
@@ -105,6 +106,7 @@ const ProductListScreen = ({ history, match }) => {
                 <th>PRICE</th>
                 <th>CATEGORY</th>
                 <th>BRAND</th>
+                <th>BARE CODE</th>
                 <th></th>
               </tr>
             </thead>
@@ -116,6 +118,15 @@ const ProductListScreen = ({ history, match }) => {
                   <td>${product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
+                  <td className='text-center'>
+                    <img id='barcode' />
+                    <BareCode
+                      value={`${product.barreCode.origCode}${product.barreCode.fabCode}${product.barreCode.prodCode}${product.barreCode.contrCode}`}
+                      height='30px'
+                      background='rgba(0,0,0,0)'
+                      // format='UPC'
+                    />{' '}
+                  </td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant='light' className='btn-sm'>
