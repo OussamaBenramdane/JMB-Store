@@ -304,7 +304,7 @@ const ProductEditScreen = ({ match, history }) => {
               </Col>
               <Col>
                 <Form.Group controlId='Protein'>
-                  <Form.Label>Carbohydrates</Form.Label>
+                  <Form.Label>Protein</Form.Label>
                   <Form.Control
                     type='text'
                     placeholder='Enter Protein'

@@ -15,6 +15,7 @@ import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Meta from '../components/Meta';
+import BareCode from 'react-barcode';
 
 import {
   listProductDetails,
@@ -110,7 +111,21 @@ const ProductScreen = ({ history, match }) => {
                     text={`${product.numReviews} reviews`}
                   />
                 </ListGroup.Item>
-                <ListGroup.Item>Exp Date: {product.expDate}</ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col md={3}>
+                      <h3>Barre Code :</h3>
+                    </Col>
+                    <Col className='text-center'>
+                      <BareCode
+                        value={`${product.barreCode.origCode}${product.barreCode.fabCode}${product.barreCode.prodCode}${product.barreCode.contrCode}`}
+                        height='30px'
+                        background='rgba(0,0,0,0)'
+                        // format='UPC'
+                      />{' '}
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
                 <ListGroup.Item>
                   <Card>
                     <ListGroup variant='flush'>
